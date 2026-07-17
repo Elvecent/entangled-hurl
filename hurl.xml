@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<!--
+  Hurl syntax definition for KDE Kate / skylighting / pandoc
+  https://hurl.dev
+
+  Usage with pandoc:
+    pandoc --syntax-definition=hurl.xml input.md -o output.html
+
+  To install for Kate or system-wide skylighting:
+    ~/.local/share/org.kde.syntax-highlighting/syntax/hurl.xml
+
+  License: MIT
+-->
+<language name="Hurl" version="1" kateversion="5.0"
+          section="Other"
+          extensions="*.hurl"
+          mimetype="text/x-hurl"
+          casesensitive="1"
+          author="Generated for entangled+hurl workflow"
+          license="MIT">
+
+  <highlighting>
+    <list name="methods">
+      <item>GET</item>
+      <item>POST</item>
+      <item>PUT</item>
+      <item>DELETE</item>
+      <item>PATCH</item>
+      <item>HEAD</item>
+      <item>OPTIONS</item>
+      <item>CONNECT</item>
+      <item>TRACE</item>
+    </list>
+
+    <list name="queries">
+      <item>status</item>
+      <item>url</item>
+      <item>header</item>
+      <item>cookie</item>
+      <item>body</item>
+      <item>xpath</item>
+      <item>jsonpath</item>
+      <item>regex</item>
+      <item>variable</item>
+      <item>duration</item>
+      <item>bytes</item>
+      <item>sha256</item>
+      <item>md5</item>
+      <item>certificate</item>
+      <item>ip</item>
+      <item>redirects</item>
+      <item>version</item>
+    </list>
+
+    <list name="predicates">
+      <item>equals</item>
+      <item>notEquals</item>
+      <item>greaterThan</item>
+      <item>greaterThanOrEquals</item>
+      <item>lessThan</item>
+      <item>lessThanOrEquals</item>
+      <item>startsWith</item>
+      <item>endsWith</item>
+      <item>contains</item>
+      <item>includes</item>
+      <item>matches</item>
+      <item>exists</item>
+      <item>not</item>
+      <item>isInteger</item>
+      <item>isFloat</item>
+      <item>isBoolean</item>
+      <item>isString</item>
+      <item>isCollection</item>
+      <item>isDate</item>
+      <item>isIsoDate</item>
+      <item>isIpv4</item>
+      <item>isIpv6</item>
+      <item>isEmpty</item>
+      <item>count</item>
+      <item>nth</item>
+      <item>last</item>
+    </list>
+
+    <list name="filters">
+      <item>count</item>
+      <item>regex</item>
+      <item>split</item>
+      <item>nth</item>
+      <item>last</item>
+      <item>first</item>
+      <item>urlDecode</item>
+      <item>urlEncode</item>
+      <item>htmlEscape</item>
+      <item>htmlUnescape</item>
+      <item>toInt</item>
+      <item>toFloat</item>
+      <item>toString</item>
+      <item>daysAfterNow</item>
+      <item>daysBeforeNow</item>
+      <item>format</item>
+      <item>decode</item>
+      <item>toDate</item>
+      <item>xpath</item>
+      <item>jsonpath</item>
+    </list>
+
+    <contexts>
+
+      <!-- Top-level context: entry point for each line -->
+      <context name="Normal" attribute="Normal Text" lineEndContext="#stay">
+
+        <!-- Comments -->
+        <DetectChar attribute="Comment" context="Comment" char="#"/>
+
+        <!-- Section headers: [Asserts], [Captures], [Options], etc. -->
+        <RegExpr attribute="Section" context="#stay"
+                 String="^\[(?:Asserts|Captures|Options|Form|MultipartFormData|Cookies|Query|BasicAuth|Body|Files)\]"/>
+
+        <!-- HTTP response line: HTTP 200, HTTP/1.1 302, HTTP/* -->
+        <RegExpr attribute="HttpVersion" context="StatusCode"
+                 String="^HTTP(?:/[0-9]+(?:\.[0-9]+)?|\*)?(?=\s)"/>
+
+        <!-- Request method at start of line -->
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="GET"     wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="POST"    wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="PUT"     wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="DELETE"  wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="PATCH"   wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="HEAD"    wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="OPTIONS" wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="CONNECT" wordWrapAtBoundaries="true" column="0"/>
+        <WordDetect attribute="Method" context="RequestUrl"
+                    String="TRACE"   wordWrapAtBoundaries="true" column="0"/>
+
+        <!-- Query keywords (jsonpath, xpath, header, status, …) -->
+        <keyword attribute="Query" context="#stay" String="queries"/>
+
+        <!-- Predicate operators: ==, !=, >=, <=, >, < -->
+        <StringDetect attribute="Operator" context="#stay" String="=="/>
+        <StringDetect attribute="Operator" context="#stay" String="!="/>
+        <StringDetect attribute="Operator" context="#stay" String=">="/>
+        <StringDetect attribute="Operator" context="#stay" String="&lt;="/>
+        <StringDetect attribute="Operator" context="#stay" String="&gt;="/>
+        <DetectChar   attribute="Operator" context="#stay" char="&lt;"/>
+        <DetectChar   attribute="Operator" context="#stay" char="&gt;"/>
+
+        <!-- Predicate words -->
+        <keyword attribute="Predicate" context="#stay" String="predicates"/>
+
+        <!-- Filter words -->
+        <keyword attribute="Filter" context="#stay" String="filters"/>
+
+        <!-- Template variables: {{name}} -->
+        <RegExpr attribute="Template" context="#stay" String="\{\{[^}]+\}\}"/>
+
+        <!-- Backtick one-line string body -->
+        <DetectChar attribute="String" context="BacktickString" char="`"/>
+
+        <!-- Quoted strings -->
+        <DetectChar attribute="String" context="DoubleString" char="&quot;"/>
+
+        <!-- Header capture name: "name:" at start of indented line -->
+        <RegExpr attribute="CaptureVar" context="#stay"
+                 String="^\s+[a-zA-Z_][a-zA-Z0-9_-]*(?=\s*:)"/>
+
+        <!-- Header name in request: "Name:" at start of line (not indented, not a section) -->
+        <RegExpr attribute="HeaderName" context="HeaderValue"
+                 String="^[A-Za-z][A-Za-z0-9_-]*(?=\s*:)"/>
+
+        <!-- Numbers -->
+        <RegExpr attribute="Number" context="#stay" String="-?[0-9]+(?:\.[0-9]+)?(?!\w)"/>
+
+        <!-- Boolean/null literals -->
+        <RegExpr attribute="Keyword" context="#stay" String="\b(?:true|false|null)\b"/>
+
+      </context>
+
+      <!-- After HTTP method, rest of line is the URL -->
+      <context name="RequestUrl" attribute="Url" lineEndContext="#pop">
+        <RegExpr attribute="Template" context="#stay" String="\{\{[^}]+\}\}"/>
+        <DetectChar attribute="Comment" context="Comment" char="#"/>
+      </context>
+
+      <!-- After HTTP version keyword, expect status code -->
+      <context name="StatusCode" attribute="Normal Text" lineEndContext="#pop">
+        <RegExpr attribute="StatusCode" context="#pop"
+                 String="\s+[0-9]+(?:\s.*)?$"/>
+        <!-- HTTP * has no numeric code -->
+        <RegExpr attribute="StatusCode" context="#pop" String="\s*\*"/>
+      </context>
+
+      <!-- Header value (everything after the colon) -->
+      <context name="HeaderValue" attribute="HeaderValue" lineEndContext="#pop">
+        <RegExpr attribute="Template" context="#stay" String="\{\{[^}]+\}\}"/>
+        <DetectChar attribute="Comment" context="Comment" char="#"/>
+      </context>
+
+      <!-- Double-quoted string with escape handling -->
+      <context name="DoubleString" attribute="String" lineEndContext="#pop">
+        <HlCStringChar attribute="StringEscape" context="#stay"/>
+        <RegExpr attribute="Template" context="#stay" String="\{\{[^}]+\}\}"/>
+        <DetectChar attribute="String" context="#pop" char="&quot;"/>
+      </context>
+
+      <!-- Backtick one-liner body string -->
+      <context name="BacktickString" attribute="String" lineEndContext="#pop">
+        <RegExpr attribute="Template" context="#stay" String="\{\{[^}]+\}\}"/>
+        <DetectChar attribute="String" context="#pop" char="`"/>
+      </context>
+
+      <!-- Line comment -->
+      <context name="Comment" attribute="Comment" lineEndContext="#pop">
+        <IncludeRules context="##Alerts"/>
+      </context>
+
+    </contexts>
+
+    <itemDatas>
+      <itemData name="Normal Text"  defStyleNum="dsNormal"       spellChecking="false"/>
+      <itemData name="Comment"      defStyleNum="dsComment"       spellChecking="false"/>
+      <itemData name="Method"       defStyleNum="dsKeyword"       spellChecking="false"/>
+      <itemData name="Url"          defStyleNum="dsSpecialString" spellChecking="false"/>
+      <itemData name="HttpVersion"  defStyleNum="dsKeyword"       spellChecking="false"/>
+      <itemData name="StatusCode"   defStyleNum="dsDecVal"        spellChecking="false"/>
+      <itemData name="Section"      defStyleNum="dsFunction"      spellChecking="false"/>
+      <itemData name="HeaderName"   defStyleNum="dsDataType"      spellChecking="false"/>
+      <itemData name="HeaderValue"  defStyleNum="dsNormal"        spellChecking="false"/>
+      <itemData name="Query"        defStyleNum="dsBuiltIn"       spellChecking="false"/>
+      <itemData name="Predicate"    defStyleNum="dsControlFlow"   spellChecking="false"/>
+      <itemData name="Filter"       defStyleNum="dsExtension"     spellChecking="false"/>
+      <itemData name="Operator"     defStyleNum="dsOperator"      spellChecking="false"/>
+      <itemData name="Template"     defStyleNum="dsVariable"      spellChecking="false"/>
+      <itemData name="CaptureVar"   defStyleNum="dsVariable"      spellChecking="false"/>
+      <itemData name="String"       defStyleNum="dsString"        spellChecking="false"/>
+      <itemData name="StringEscape" defStyleNum="dsSpecialChar"   spellChecking="false"/>
+      <itemData name="Number"       defStyleNum="dsDecVal"        spellChecking="false"/>
+      <itemData name="Keyword"      defStyleNum="dsKeyword"       spellChecking="false"/>
+    </itemDatas>
+
+  </highlighting>
+
+  <general>
+    <comments>
+      <comment name="singleLine" start="#"/>
+    </comments>
+  </general>
+
+</language>

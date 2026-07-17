@@ -1,0 +1,11 @@
+version = "2.0"
+watch_list = ["docs/**/*.md", "README.md"]
+hooks=["brei", "quarto_attributes"]
+
+[[languages]]
+name = "Hurl"
+identifiers = ["hurl"]
+comment = { open = "#" }
+
+[brei]
+include = [".entangled/tasks.json"]

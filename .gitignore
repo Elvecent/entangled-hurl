@@ -1,0 +1,8 @@
+.brei_history
+.emacs*
+.entangled
+tests/**
+!tests/results/
+!tests/results/.gitkeep
+site/*
+!site/index.example.html
