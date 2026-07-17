@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Users API</title>
+  <title>API doc</title>
   <style>
     html {
       color: #1a1a1a;
@@ -235,8 +235,22 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Users API</h1>
+<h1 class="title">API doc</h1>
 </header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#usage" id="toc-usage">Usage</a>
+<ul>
+<li><a href="#run-generated-tests" id="toc-run-generated-tests">Run
+generated tests</a></li>
+<li><a href="#render-the-doc" id="toc-render-the-doc">Render the
+doc</a></li>
+</ul></li>
+<li><a href="#utils" id="toc-utils">Utils</a></li>
+<li><a href="#get-a-user" id="toc-get-a-user">Get a user</a></li>
+<li><a href="#get-a-post" id="toc-get-a-post">Get a post</a></li>
+</ul>
+</nav>
 <h2 id="usage">Usage</h2>
 <p>Nix shell is available with <code>nix develop</code>.</p>
 <p>Run <code>entangled tangle</code> to prepare tasks and tests.</p>
@@ -249,20 +263,28 @@
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash task"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| description: &quot;render docs&quot;</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| creates: &quot;site/index.html&quot;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| requires: &quot;tests/results/get-user.txt&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| requires: &quot;#test&quot;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| collect: &quot;render&quot;</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> <span class="va">$(</span><span class="fu">find</span> . <span class="at">-name</span> <span class="st">&#39;*.md&#39;</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-r</span><span class="va">)</span> <span class="dt">\</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--standalone</span> <span class="dt">\</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--lua-filter</span><span class="op">=</span>include-result.lua <span class="dt">\</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--lua-filter</span><span class="op">=</span>annotate-blocks.lua <span class="dt">\</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--syntax-definition</span><span class="op">=</span>hurl.xml <span class="dt">\</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--metadata</span> title=<span class="st">&quot;Users API&quot;</span> <span class="dt">\</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--metadata</span> title=<span class="st">&quot;API doc&quot;</span> <span class="dt">\</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">-M</span> maxwidth=40% <span class="dt">\</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">-V</span> margin-top=0 <span class="dt">\</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">-o</span> site/index.html</span></code></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--toc</span> <span class="dt">\</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">-o</span> site/index.html</span></code></pre></div>
 <p>Can be invoked with <code>entangled brei render</code>.</p>
 <p><code>entangled brei -B render</code> to force render and test
 runs.</p>
+<h2 id="utils">Utils</h2>
+<p>Check that <code>Content-Type</code> header contains
+<code>application/json</code>.</p>
+<fieldset><legend>application-json-header-assert</legend>
+<div class="sourceCode" id="application-json-header-assert"><pre
+class="sourceCode hurl"><code class="sourceCode hurl"><span id="application-json-header-assert-1"><a href="#application-json-header-assert-1" aria-hidden="true" tabindex="-1"></a><span class="bu">header</span> <span class="st">&quot;Content-Type&quot;</span> <span class="cf">contains</span> <span class="st">&quot;application/json&quot;</span></span></code></pre></div>
+</fieldset>
 <h2 id="get-a-user">Get a user</h2>
 <div class="sourceCode" id="cb2" data-file="tests/get-user.hurl"><pre
 class="sourceCode hurl"><code class="sourceCode hurl"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GET</span><span class="ss"> https://jsonplaceholder.typicode.com/users/</span><span class="va">{{user_id}}</span></span>
@@ -306,14 +328,35 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="
 class="sourceCode bash task"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| description: &quot;run get-user&quot;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| creates: [&quot;tests/results/get-user.txt&quot;, &quot;tests/results/get-user.curl&quot;]</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| collect: &quot;test&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hurl</span> <span class="at">--variable</span> user_id=1 <span class="at">--curl</span> tests/results/get-user.curl tests/get-user.hurl <span class="dt">\</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> tests/results/get-user.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
-<h2 id="utils">Utils</h2>
-<p>Check that <code>Content-Type</code> header contains
-<code>application/json</code>.</p>
-<fieldset><legend>application-json-header-assert</legend>
-<div class="sourceCode" id="application-json-header-assert"><pre
-class="sourceCode hurl"><code class="sourceCode hurl"><span id="application-json-header-assert-1"><a href="#application-json-header-assert-1" aria-hidden="true" tabindex="-1"></a><span class="bu">header</span> <span class="st">&quot;Content-Type&quot;</span> <span class="cf">contains</span> <span class="st">&quot;application/json&quot;</span></span></code></pre></div>
-</fieldset>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hurl</span> <span class="at">--variable</span> user_id=1 <span class="at">--curl</span> tests/results/get-user.curl <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  tests/get-user.hurl <span class="op">&gt;</span> tests/results/get-user.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
+<h2 id="get-a-post">Get a post</h2>
+<div class="sourceCode" id="cb6" data-file="tests/get-post.hurl"><pre
+class="sourceCode hurl"><code class="sourceCode hurl"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">GET</span><span class="ss"> https://jsonplaceholder.typicode.com/posts/</span><span class="va">{{post_id}}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">HTTP</span><span class="dv"> 200</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">[Asserts]</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;&lt;</span>application-json-<span class="bu">header</span>-assert<span class="op">&gt;&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">jsonpath</span> <span class="st">&quot;$.id&quot;</span> <span class="op">==</span> <span class="va">{{post_id}}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">jsonpath</span> <span class="st">&quot;$.title&quot;</span> <span class="cf">exists</span></span></code></pre></div>
+<details><summary>curl</summary>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">&#39;https://jsonplaceholder.typicode.com/posts/1&#39;</span></span></code></pre></div>
+</details>
+<details><summary>result</summary>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;userId&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;sunt aut facere repellat provident occaecati excepturi optio reprehenderit&quot;</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;body&quot;</span><span class="fu">:</span> <span class="st">&quot;quia et suscipit</span><span class="ch">\n</span><span class="st">suscipit recusandae consequuntur expedita et cum</span><span class="ch">\n</span><span class="st">reprehenderit molestiae ut ut quas totam</span><span class="ch">\n</span><span class="st">nostrum rerum est autem sunt rem eveniet architecto&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</details>
+<p>Run it:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash task"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| description: &quot;run get-post&quot;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| creates: [&quot;tests/results/get-post.txt&quot;, &quot;tests/results/get-post.curl&quot;]</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| collect: &quot;test&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hurl</span> <span class="at">--variable</span> post_id=1 <span class="at">--curl</span> tests/results/get-post.curl <span class="dt">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  tests/get-post.hurl <span class="op">&gt;</span> tests/results/get-post.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
 </body>
 </html>

@@ -17,16 +17,17 @@ Example output at `site/index.example.html`.
 ``` { .bash .task }
 #| description: "render docs"
 #| creates: "site/index.html"
-#| requires: "tests/results/get-user.txt"
+#| requires: "#test"
 #| collect: "render"
 pandoc $(find . -name '*.md' | sort -r) \
     --standalone \
     --lua-filter=include-result.lua \
     --lua-filter=annotate-blocks.lua \
     --syntax-definition=hurl.xml \
-    --metadata title="Users API" \
+    --metadata title="API doc" \
     -M maxwidth=40% \
     -V margin-top=0 \
+    --toc \
     -o site/index.html
 ```
 
