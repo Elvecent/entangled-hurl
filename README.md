@@ -2,6 +2,11 @@
 
 Nix shell is available with `nix develop`.
 
+Binary cache:
+```
+elvecent-personal.cachix.org-1:v+IgLMSa3+4izbeuJ3BPjfvOmuL/USaUM4rUDXEuUIs=
+```
+
 Run `entangled tangle` to prepare tasks and tests.
 
 Run again if you edit `.md` files, or start `entangled watch`.
