@@ -271,38 +271,43 @@ class="sourceCode hurl"><code class="sourceCode hurl"><span id="cb2-1"><a href="
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;&lt;</span>application-json-<span class="bu">header</span>-assert<span class="op">&gt;&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">jsonpath</span> <span class="st">&quot;$.id&quot;</span> <span class="op">==</span> <span class="va">{{user_id}}</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">jsonpath</span> <span class="st">&quot;$.name&quot;</span> <span class="cf">exists</span></span></code></pre></div>
-<p>Run it:</p>
+<details><summary>curl</summary>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode bash task"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| description: &quot;run get-user&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| creates: &quot;tests/results/get-user.txt&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| collect: &quot;test&quot;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hurl</span> <span class="at">--variable</span> user_id=1 tests/get-user.hurl <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> tests/results/get-user.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
-<fieldset><legend>json</legend>
-<pre id="json"><code>{
-  &quot;id&quot;: 1,
-  &quot;name&quot;: &quot;Leanne Graham&quot;,
-  &quot;username&quot;: &quot;Bret&quot;,
-  &quot;email&quot;: &quot;Sincere@april.biz&quot;,
-  &quot;address&quot;: {
-    &quot;street&quot;: &quot;Kulas Light&quot;,
-    &quot;suite&quot;: &quot;Apt. 556&quot;,
-    &quot;city&quot;: &quot;Gwenborough&quot;,
-    &quot;zipcode&quot;: &quot;92998-3874&quot;,
-    &quot;geo&quot;: {
-      &quot;lat&quot;: &quot;-37.3159&quot;,
-      &quot;lng&quot;: &quot;81.1496&quot;
-    }
-  },
-  &quot;phone&quot;: &quot;1-770-736-8031 x56442&quot;,
-  &quot;website&quot;: &quot;hildegard.org&quot;,
-  &quot;company&quot;: {
-    &quot;name&quot;: &quot;Romaguera-Crona&quot;,
-    &quot;catchPhrase&quot;: &quot;Multi-layered client-server neural-net&quot;,
-    &quot;bs&quot;: &quot;harness real-time e-markets&quot;
-  }
-}</code></pre>
-</fieldset>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="st">&#39;https://jsonplaceholder.typicode.com/users/1&#39;</span></span></code></pre></div>
+</details>
+<details><summary>result</summary>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Leanne Graham&quot;</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;Bret&quot;</span><span class="fu">,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;Sincere@april.biz&quot;</span><span class="fu">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;address&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;street&quot;</span><span class="fu">:</span> <span class="st">&quot;Kulas Light&quot;</span><span class="fu">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;suite&quot;</span><span class="fu">:</span> <span class="st">&quot;Apt. 556&quot;</span><span class="fu">,</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Gwenborough&quot;</span><span class="fu">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;zipcode&quot;</span><span class="fu">:</span> <span class="st">&quot;92998-3874&quot;</span><span class="fu">,</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;geo&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;lat&quot;</span><span class="fu">:</span> <span class="st">&quot;-37.3159&quot;</span><span class="fu">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;lng&quot;</span><span class="fu">:</span> <span class="st">&quot;81.1496&quot;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;phone&quot;</span><span class="fu">:</span> <span class="st">&quot;1-770-736-8031 x56442&quot;</span><span class="fu">,</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;website&quot;</span><span class="fu">:</span> <span class="st">&quot;hildegard.org&quot;</span><span class="fu">,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;company&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Romaguera-Crona&quot;</span><span class="fu">,</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;catchPhrase&quot;</span><span class="fu">:</span> <span class="st">&quot;Multi-layered client-server neural-net&quot;</span><span class="fu">,</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;bs&quot;</span><span class="fu">:</span> <span class="st">&quot;harness real-time e-markets&quot;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</details>
+<p>Run it:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash task"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| description: &quot;run get-user&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| creates: [&quot;tests/results/get-user.txt&quot;, &quot;tests/results/get-user.curl&quot;]</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| collect: &quot;test&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">hurl</span> <span class="at">--variable</span> user_id=1 <span class="at">--curl</span> tests/results/get-user.curl tests/get-user.hurl <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> tests/results/get-user.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div>
 <h2 id="utils">Utils</h2>
 <p>Check that <code>Content-Type</code> header contains
 <code>application/json</code>.</p>

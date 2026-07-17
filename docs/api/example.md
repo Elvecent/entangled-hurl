@@ -13,14 +13,10 @@ Run it:
 
 ``` { .bash .task }
 #| description: "run get-user"
-#| creates: "tests/results/get-user.txt"
+#| creates: ["tests/results/get-user.txt", "tests/results/get-user.curl"]
 #| collect: "test"
-hurl --variable user_id=1 tests/get-user.hurl \
+hurl --variable user_id=1 --curl tests/results/get-user.curl tests/get-user.hurl \
   > tests/results/get-user.txt 2>&1
-```
-
-``` result
-tests/results/get-user.txt
 ```
 
 ## Utils
