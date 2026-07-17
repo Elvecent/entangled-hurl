@@ -23,6 +23,7 @@ pandoc $(find . -name '*.md' | sort -r) \
     --standalone \
     --lua-filter=include-result.lua \
     --lua-filter=annotate-blocks.lua \
+    --lua-filter=cross-ref.lua \
     --syntax-definition=hurl.xml \
     --metadata title="API doc" \
     -M maxwidth=40% \

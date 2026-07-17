@@ -1,11 +1,10 @@
 ## Get a user's name from post id
 
-``` { .hurl file=tests/get-user-name-by-post.hurl }
+``` { .hurl file=tests/get-user-name-by-post.hurl #get-user-name-by-post }
 <<get-post>>
 [Captures]
 user_id: jsonpath "$.userId"
 <<get-user>>
-
 ```
 
 ``` { .bash .task }

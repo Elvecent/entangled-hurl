@@ -44,6 +44,10 @@ function CodeBlock(el)
          append_blocks(blocks, wrap_in_details(result, "result", lang))
       end
 
+      if curl or result then
+         append_blocks(blocks, {pandoc.RawBlock("html", "<br>")})
+      end
+
       return pandoc.Blocks(blocks)
    end
 end
