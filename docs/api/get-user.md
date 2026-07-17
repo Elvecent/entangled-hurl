@@ -1,6 +1,6 @@
 ## Get a user
 
-``` {.hurl file=tests/get-user.hurl}
+``` { .hurl file=tests/get-user.hurl #get-user }
 GET https://jsonplaceholder.typicode.com/users/{{user_id}}
 HTTP 200
 [Asserts]
@@ -13,6 +13,7 @@ Run it:
 
 ``` { .bash .task }
 #| description: "run get-user"
+#| requires: "tests/get-user.hurl"
 #| creates: ["tests/results/get-user.txt", "tests/results/get-user.curl"]
 #| collect: "test"
 hurl --variable user_id=1 --curl tests/results/get-user.curl \

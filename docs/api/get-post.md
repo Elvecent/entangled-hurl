@@ -1,6 +1,6 @@
 ## Get a post
 
-``` {.hurl file=tests/get-post.hurl}
+``` { .hurl file=tests/get-post.hurl #get-post}
 GET https://jsonplaceholder.typicode.com/posts/{{post_id}}
 HTTP 200
 [Asserts]
@@ -13,6 +13,7 @@ Run it:
 
 ``` { .bash .task }
 #| description: "run get-post"
+#| requires: "tests/get-post.hurl"
 #| creates: ["tests/results/get-post.txt", "tests/results/get-post.curl"]
 #| collect: "test"
 hurl --variable post_id=1 --curl tests/results/get-post.curl \
